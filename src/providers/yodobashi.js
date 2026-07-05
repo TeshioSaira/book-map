@@ -48,11 +48,16 @@ export async function getYodobashi(isbn, env) {
     for (let i = 0; i < count; i++) {
         const entry = entries.nth(i);
 
-        const name = await entry.locator(".storeNameText").innerText();
+        const storeNames = entry.locator(".storeNameText");
+        const nameCount = await storeNames.count();
+        const names = [];
+        for (let j = 0; j < nameCount; j++) {
+            names.push(await storeNames.nth(j).innerText());
+        }
         const stock = await entry.locator(".stockArea").innerText();
 
         result.push({
-            name: name,
+            name: names,
             stock_text: stock
         });
     }
