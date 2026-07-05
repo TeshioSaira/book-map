@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "book-map",
+	"name": "book-map-worker",
 	"main": "src/index.js",
 	"compatibility_date": "2026-07-05",
 	"observability": {
