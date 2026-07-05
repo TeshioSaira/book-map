@@ -24,6 +24,8 @@ export async function getYodobashi(isbn, env) {
     const html = await page.content();
 
     const sku = html.match(/data-sku="(\d+)"/)?.[1];
+    
+    const page_stock = await browser.newPage();
 
     await page_stock.goto(
         `https://www.yodobashi.com/ec/product/stock/${sku}/`,
