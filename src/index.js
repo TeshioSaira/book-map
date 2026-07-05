@@ -8,8 +8,28 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
+import { getBookInfo } from "./services/bookService";
+
 export default {
-	async fetch(request, env, ctx) {
-		return new Response("Hello World!");
-	},
+    async fetch(request) {
+
+        const url = new URL(request.url);
+        const isbn = url.searchParams.get("isbn");
+
+        if (!isbn) {
+            return Response.json({
+                success: false,
+                error: "ISBNを指定してください"
+            });
+        }
+
+        const book = await getBookInfo(isbn);
+
+        return Response.json({
+            success: book != null,
+            book: book,
+            stores: []
+        });
+
+    }
 };
