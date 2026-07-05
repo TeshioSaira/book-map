@@ -10,6 +10,9 @@
 	"observability": {
 		"enabled": true
 	},
+	"browser": {
+		"binding": "MYBROWSER"
+	},
 	"upload_source_maps": true,
 	"compatibility_flags": [
 		"nodejs_compat"

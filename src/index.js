@@ -12,7 +12,7 @@ import { getBookInfo } from "./services/bookService";
 import { getStoreInfo } from "./services/storeService";
 
 export default {
-    async fetch(request) {
+    async fetch(request, env) {
 
         const url = new URL(request.url);
         const isbn = url.searchParams.get("isbn");
@@ -25,7 +25,7 @@ export default {
         }
 
         const book = await getBookInfo(isbn);
-		const stores = await getStoreInfo(isbn);
+		const stores = await getStoreInfo(isbn, env);
 
         return Response.json({
             success: book != null,

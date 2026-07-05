@@ -2,7 +2,7 @@ import { getMelonbooks } from "../providers/melonbooks";
 import { getMaruzen } from "../providers/maruzen";
 import { getYodobashi } from "../providers/yodobashi";
 
-export async function getStoreInfo(isbn) {
+export async function getStoreInfo(isbn, env) {
     let store = {};
 
     let melonbooks = await getMelonbooks(isbn);
@@ -11,8 +11,8 @@ export async function getStoreInfo(isbn) {
     let maruzen = await getMaruzen(isbn);
     store["maruzen"] = maruzen;
 
-    let yodobashi = await getYodobashi(isbn);
-    store["yodobashi"] = yodobashi;
+    const html = await getYodobashi(isbn, env);
+    store["yodobashi"] = html;
 
     return store;
 
