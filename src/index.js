@@ -9,6 +9,7 @@
  */
 
 import { getBookInfo } from "./services/bookService";
+import { getMelonbooks } from "./providers/melonbooks.js";
 
 export default {
     async fetch(request) {
@@ -24,11 +25,12 @@ export default {
         }
 
         const book = await getBookInfo(isbn);
+		const stores = await getMelonbooks(isbn);
 
         return Response.json({
             success: book != null,
             book: book,
-            stores: []
+            stores: [stores]
         });
 
     }
