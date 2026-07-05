@@ -1,4 +1,4 @@
-import { getStore as getMelonbooks } from "../providers/melonbooks";
+import { getMelonbooks } from "../providers/melonbooks";
 
 export async function getStoreInfo(isbn) {
     let store = {};

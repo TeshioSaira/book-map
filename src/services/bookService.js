@@ -1,5 +1,5 @@
-import { getBook as getOpenBD } from "../providers/openbd";
-import { getBook as getGoogleBook } from "../providers/googleBooks";
+import { getOpenBD } from "../providers/openbd";
+import { getGoogleBook } from "../providers/googleBooks";
 
 export async function getBookInfo(isbn) {
 
