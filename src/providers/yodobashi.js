@@ -39,11 +39,18 @@ export async function getYodobashi(isbn, env) {
         }
     );
     await page_stock.waitForTimeout(3000);
-    const entries = await page_stock.locator(".entryBlock").all();
+
+    const entries = page_stock.locator(".entryBlock");
+    const count = await entries.count();
+
     const result = [];
-    for (const entry of entries) {
+
+    for (let i = 0; i < count; i++) {
+        const entry = entries.nth(i);
+
         const name = await entry.locator(".storeNameText").innerText();
-        const stock = await entry.locator(".stockArea .green").innerText();
+        const stock = await entry.locator(".stockArea").innerText();
+
         result.push({
             name: name,
             stock_text: stock
