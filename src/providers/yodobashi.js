@@ -25,13 +25,6 @@ export async function getYodobashi(isbn, env) {
 
     const sku = html.match(/data-sku="(\d+)"/)?.[1];
 
-    const page_stock = await browser.newPage();
-
-    // ブラウザっぽく見せる
-    await page_stock.setExtraHTTPHeaders({
-      "accept-language": "ja,en;q=0.9"
-    });
-
     await page_stock.goto(
         `https://www.yodobashi.com/ec/product/stock/${sku}/`,
         {
@@ -57,7 +50,7 @@ export async function getYodobashi(isbn, env) {
         const stock = await entry.locator(".stockArea").innerText();
 
         result.push({
-            name: name,
+            name: names,
             stock_text: stock
         });
     }
