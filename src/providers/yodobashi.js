@@ -18,22 +18,18 @@ export async function getYodobashi(isbn, env) {
         }
     );
 
-    // JSが終わるまで少し待つ
-    await page.waitForTimeout(3000);
-
     const html = await page.content();
 
     const sku = html.match(/data-sku="(\d+)"/)?.[1];
 
-    await page.goto(
+    await page_stock.goto(
         `https://www.yodobashi.com/ec/product/stock/${sku}/`,
         {
             waitUntil: "commit"
         }
     );
-    await page.waitForTimeout(3000);
 
-    const entries = page.locator(".entryBlock");
+    const entries = page_stock.locator(".entryBlock");
     const count = await entries.count();
 
     const result = [];
