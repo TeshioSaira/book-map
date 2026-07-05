@@ -14,7 +14,8 @@ export async function getMelonbooks(isbn) {
       Object.values(area.stores).forEach((store) => {
         result.push({
           name: store.store_name,
-          stock: store.stock_real_num
+          stock: store.stock_real_num,
+          handling: null
         });
       });
     });
