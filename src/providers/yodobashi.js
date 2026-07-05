@@ -12,11 +12,10 @@ export async function getYodobashi(isbn, env) {
     });
 
     await page.goto(
-      `https://www.yodobashi.com/?word=${isbn}`,
-      {
-        waitUntil: "networkidle",
-        timeout: 60000
-      }
+        `https://www.yodobashi.com/?word=${isbn}`,
+        {
+            waitUntil: "commit"
+        }
     );
 
     // JSが終わるまで少し待つ
