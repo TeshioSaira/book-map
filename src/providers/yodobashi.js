@@ -35,7 +35,7 @@ export async function getYodobashi(isbn, env) {
             waitUntil: "commit"
         }
     );
-    const entries = await page.locator(".entryBlock").all();
+    const entries = await page_stock.locator(".entryBlock").all();
     const result = [];
     for (const entry of entries) {
         const name = await entry.locator(".storeNameText").innerText();
