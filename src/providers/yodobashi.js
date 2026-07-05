@@ -21,16 +21,26 @@ export async function getYodobashi(isbn, env) {
     // JSが終わるまで少し待つ
     await page.waitForTimeout(3000);
 
-    const sku = await page.locator(".js_productBox").first().getAttribute("data-sku");
-    await page.goto(
+    const html = await page.content();
+
+    const sku = html.match(/data-sku="(\d+)"/)?.[1];
+
+    const page_stock = await browser.newPage();
+
+    // ブラウザっぽく見せる
+    await page_stock.setExtraHTTPHeaders({
+      "accept-language": "ja,en;q=0.9"
+    });
+
+    await page_stock.goto(
         `https://www.yodobashi.com/ec/product/stock/${sku}/`,
         {
             waitUntil: "commit"
         }
     );
+    await page_stock.waitForTimeout(3000);
 
-    await page.waitForTimeout(3000);
-    const entries = await page.locator(".entryBlock");
+    const entries = page_stock.locator(".entryBlock");
     const count = await entries.count();
 
     const result = [];
@@ -47,7 +57,7 @@ export async function getYodobashi(isbn, env) {
         const stock = await entry.locator(".stockArea").innerText();
 
         result.push({
-            name: names,
+            name: name,
             stock_text: stock
         });
     }
