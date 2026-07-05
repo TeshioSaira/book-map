@@ -8,6 +8,6 @@ export async function getYodobashi(isbn) {
     return res;
   } catch (e) {
     console.error(e);
-    return [];
+    return e;
   }
 }
