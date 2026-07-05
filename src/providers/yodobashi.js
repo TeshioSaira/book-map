@@ -25,16 +25,23 @@ export async function getYodobashi(isbn, env) {
 
     const sku = html.match(/data-sku="(\d+)"/)?.[1];
 
-    await page.goto(
+    const page_stock = await browser.newPage();
+
+    // ブラウザっぽく見せる
+    await page_stock.setExtraHTTPHeaders({
+      "accept-language": "ja,en;q=0.9"
+    });
+
+    await page_stock.goto(
         `https://www.yodobashi.com/ec/product/stock/${sku}/`,
         {
             waitUntil: "commit"
         }
     );
 
-    await page.waitForTimeout(3000);
+    await page_stock.waitForTimeout(3000);
 
-    const html_stock = await page.content();
+    const html_stock = await page_stock.content();
 
     return html_stock;
 
