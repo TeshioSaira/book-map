@@ -18,6 +18,9 @@ export async function getYodobashi(isbn, env) {
         }
     );
 
+    // JSが終わるまで少し待つ
+    await page.waitForTimeout(3000);
+
     const html = await page.content();
 
     const sku = html.match(/data-sku="(\d+)"/)?.[1];
@@ -35,6 +38,7 @@ export async function getYodobashi(isbn, env) {
             waitUntil: "commit"
         }
     );
+    await page_stock.waitForTimeout(3000);
     const entries = await page_stock.locator(".entryBlock").all();
     const result = [];
     for (const entry of entries) {
@@ -46,7 +50,7 @@ export async function getYodobashi(isbn, env) {
         });
     }
 
-    return entries;
+    return result;
 
   } finally {
     await browser.close();
