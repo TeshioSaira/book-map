@@ -1,5 +1,9 @@
+const api_key = "NRMS43LYRVMAa6PmfKdAHFnD5UDWaPcg";
+
+import store_json from "../stores/melonbooksPosition.json"
+
 export async function getMelonbooks(isbn) {
-  const url = "https://zaiko.shoptech.jp/api/api/stock.json?api_key=NRMS43LYRVMAa6PmfKdAHFnD5UDWaPcg&product_code=" + isbn;
+  const url = "https://zaiko.shoptech.jp/api/api/stock.json?api_key=" + api_key + "&product_code=" + isbn;
   try {
     const res = await fetch(url);
     if (!res.ok) {
@@ -12,10 +16,17 @@ export async function getMelonbooks(isbn) {
     const result = [];
     Object.values(json.stocks.with_area).forEach((area) => {
       Object.values(area.stores).forEach((store) => {
+        var lat = null;
+        var lng = null;
+        if(store_json[store.store_name]){
+          lat = store_json[store.store_name]["lat"];
+          lng = store_json[store.store_name]["lng"];
+        }
         result.push({
-          name: store.store_name,
+          name: [store.store_name],
           stock: store.stock_real_num,
-          handling: null
+          lat: lat,
+          lng: lng
         });
       });
     });

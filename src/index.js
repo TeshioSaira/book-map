@@ -16,6 +16,7 @@ export default {
 
         const url = new URL(request.url);
         const isbn = url.searchParams.get("isbn");
+        const page = url.searchParams.get("page");
 
         if (!isbn) {
             return Response.json({
@@ -23,13 +24,24 @@ export default {
                 error: "ISBNを指定してください"
             });
         }
+        if (!page) {
+            return Response.json({
+                success: false,
+                error: "ページを指定してください"
+            });
+        }
 
-        const book = await getBookInfo(isbn);
-		const stores = await getStoreInfo(isbn, env);
+        if (page == 0){
+            const book = await getBookInfo(isbn);
+            return Response.json({
+                success: book != null,
+                book: book
+            });
+        }
 
+		const stores = await getStoreInfo(isbn, page, env);
         return Response.json({
-            success: book != null,
-            book: book,
+            success: stores != null,
             stores: stores
         });
 

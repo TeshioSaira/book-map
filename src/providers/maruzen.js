@@ -50,7 +50,7 @@ export async function getMaruzen(isbn) {
                     return;
                 }
                 result.push({
-                    name: shop_list[shop.store_code].name,
+                    name: [shop_list[shop.store_code].name],
                     stock: shop.stock_quantity,
                     handling: shop.place_list.length > 0,
                     lat: shop_list[shop.store_code].lat,
